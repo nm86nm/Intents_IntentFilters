@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -44,14 +45,14 @@ class MainActivity : ComponentActivity() {
                         Intent(applicationContext, SecondActivity::class.java).also {
                             startActivity(it)
                         }
-                        /*Intent(Intent.ACTION_MAIN).also {
+                        Intent(Intent.ACTION_MAIN).also {
                             it.`package` = "com.google.android.youtube"
                             try {
                                 startActivity(it)
                             } catch (e: ActivityNotFoundException){
                                 e.printStackTrace()
                             }
-                        }*/
+                        }
                         val intent = Intent(Intent.ACTION_SEND).apply {
                             type = "text/plain"
                             putExtra(Intent.EXTRA_EMAIL, arrayOf("test@test.com"))
@@ -69,6 +70,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
@@ -76,7 +78,7 @@ class MainActivity : ComponentActivity() {
         } else {
             intent?.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
         }
-        viewModel.upfateUri(uri)
+        viewModel.updateUri(uri)
     }
 }
 
