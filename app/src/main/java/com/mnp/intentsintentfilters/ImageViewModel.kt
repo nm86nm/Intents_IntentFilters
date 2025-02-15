@@ -10,6 +10,7 @@ class ImageViewModel: ViewModel() {
 
     var uri: Uri? by mutableStateOf(null)
         private set
+
     fun updateUri(uri: Uri?){
         this.uri = uri
     }
